@@ -14,9 +14,9 @@ public class HitFruit : MonoBehaviour
         fruitManager = GameObject.FindObjectOfType<FruitManager>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (LayerMaskUtils.IsInLayerMask(collision.gameObject, characterLayerMask))
+        if (LayerMaskUtils.IsInLayerMask(collider.gameObject, characterLayerMask))
         {
             fruitManager.FruitDeleted();
             Destroy(gameObject);

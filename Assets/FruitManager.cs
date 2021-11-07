@@ -8,6 +8,7 @@ public class FruitManager : MonoBehaviour
     public LayerMask fruitLayerMask;
     public int totalNumFruits;
     public FinishedLevel finishedLevel;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -27,6 +28,8 @@ public class FruitManager : MonoBehaviour
         if (totalNumFruits == 0) return;
 
         totalNumFruits -= 1;
+        audioSource.Play();
+
         if (totalNumFruits == 0)
         {
             finishedLevel.finishedLevel = true;
