@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PacmanMove : MonoBehaviour
+public class CharacterMove : MonoBehaviour
 {
 
     public Rigidbody2D rb;
     public LayerMask wallLayerMask;
     public Collider2D pacmanCollider;
-    public SpriteRenderer _renderer;
     public float TimeBetweenClimbs = 0.5f;
     public float TimeBetweenJumps = 0.5f;
 
-    public Animator pacmanAnimator;
-    public SpriteRenderer pacmanSpriteRenderer;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     bool grounded = false, climbing = false;
 
@@ -41,32 +40,33 @@ public class PacmanMove : MonoBehaviour
         float hor = Input.GetAxisRaw("Horizontal");
         float ver = Input.GetAxisRaw("Vertical");
 
-        pacmanAnimator.SetFloat("horizontalVelocity", Mathf.Abs(hor));
-        pacmanAnimator.SetFloat("verticalVelocity", rb.velocity.y);
+        animator.SetFloat("horizontalVelocity", Mathf.Abs(hor));
+        animator.SetFloat("verticalVelocity", rb.velocity.y);
 
         if (hor < 0f && !hittingWallLeft)
         {
             transform.position = transform.position + (Vector3.left * 3f * Time.deltaTime);
-            pacmanSpriteRenderer.flipX = true;
+            spriteRenderer.flipX = true;
         }
         else if (hor > 0f && !hittingWallRight)
         {
             transform.position = transform.position + (Vector3.right * 3f * Time.deltaTime);
-            pacmanSpriteRenderer.flipX = false;
+            spriteRenderer.flipX = false;
         }
 
         float thres = 0.1f;
 
         bool shouldJump = Input.GetKeyDown(KeyCode.Space) && timeSinceLastJump <= 0;
         bool prevClimbing = climbing;
-        climbing = (hittingWallLeft || hittingWallRight) && Input.GetKey(KeyCode.LeftShift) && timeSinceLastClimb == 0f;
+        // climbing = (hittingWallLeft || hittingWallRight) && Input.GetKey(KeyCode.LeftShift) && timeSinceLastClimb == 0f;
+        climbing = false;
 
         if (prevClimbing && !climbing)
         {
             timeSinceLastClimb = TimeBetweenClimbs;
         }
 
-        pacmanAnimator.SetBool("isClimbing", climbing);
+        animator.SetBool("isClimbing", climbing);
 
         if (climbing)
         {
@@ -77,7 +77,7 @@ public class PacmanMove : MonoBehaviour
                 transform.position = transform.position + (Vector3.up * Mathf.Sign(ver) * 3f * Time.deltaTime);
             }
 
-            pacmanAnimator.SetBool("isClimbingActive", climbingActive);
+            animator.SetBool("isClimbingActive", climbingActive);
 
             rb.gravityScale = 0f;
 
@@ -93,7 +93,7 @@ public class PacmanMove : MonoBehaviour
         if (shouldJump)
         {
             numJumpsSinceLastGrounded += 1;
-            pacmanAnimator.SetFloat("numJumpsSinceLastGrounded", numJumpsSinceLastGrounded);
+            animator.SetFloat("numJumpsSinceLastGrounded", numJumpsSinceLastGrounded);
 
             if (climbing)
             {
@@ -128,7 +128,7 @@ public class PacmanMove : MonoBehaviour
 
         float xExtent = pacmanCollider.bounds.extents.x;
         float yExtent = pacmanCollider.bounds.extents.y;
-        const float raycastDistance = 0.025f;
+        const float raycastDistance = 0.1f;
 
         Vector3[] positions = {
             new Vector3(-xExtent, -yExtent, 0f) ,
@@ -146,9 +146,10 @@ public class PacmanMove : MonoBehaviour
 
         if (DetectedFromRaycast(positions, Vector2.down, contactFilter, raycastDistance))
         {
+            Debug.Log("hit ground");
             grounded = true;
             numJumpsSinceLastGrounded = 0;
-            pacmanAnimator.SetFloat("numJumpsSinceLastGrounded", numJumpsSinceLastGrounded);
+            animator.SetFloat("numJumpsSinceLastGrounded", numJumpsSinceLastGrounded);
         }
     }
 
