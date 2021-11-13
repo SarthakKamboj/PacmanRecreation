@@ -4,6 +4,10 @@ Pixelli is a 2D platformer game loosely inspired by Super Mario Bros and Waterbo
 
 <br>
 
+<h2><a target="_blank" href="https://sarthakkamboj.itch.io/pixelli">Link To Game</a></h2>
+
+<br>
+
 <h2>Topics Learned</h2>
 <li>2D Collision Detection</li>
 <li>Manipulating animation system with states and statemachines</li>
