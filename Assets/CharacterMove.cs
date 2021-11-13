@@ -146,7 +146,6 @@ public class CharacterMove : MonoBehaviour
 
         if (DetectedFromRaycast(positions, Vector2.down, contactFilter, raycastDistance))
         {
-            Debug.Log("hit ground");
             grounded = true;
             numJumpsSinceLastGrounded = 0;
             animator.SetFloat("numJumpsSinceLastGrounded", numJumpsSinceLastGrounded);

@@ -6,9 +6,11 @@ public class FruitManager : MonoBehaviour
 {
 
     public LayerMask fruitLayerMask;
-    public int totalNumFruits;
     public FinishedLevel finishedLevel;
     public AudioSource audioSource;
+
+
+    int totalNumFruits;
 
     void Start()
     {
@@ -21,6 +23,7 @@ public class FruitManager : MonoBehaviour
                 totalNumFruits += 1;
             }
         }
+        finishedLevel.finishedLevel = (totalNumFruits == 0);
     }
 
     public void FruitDeleted()
