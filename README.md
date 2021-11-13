@@ -2,11 +2,7 @@
 <h2>About</h2>
 <p>Pixelli is a 2D platformer game loosely inspired by Super Mario Bros and Waterboy and Firegirl. The objective of the game is to collect all the fruits in the level and reach the checkpoint without hitting spikeheads and fire switches. It was developed using the Unity Game Engine and C#.</p>
 
-<br>
-
 <h3><a target="_blank" href="https://sarthakkamboj.itch.io/pixelli">Link To Game</a></h3>
-
-<br>
 
 <h2>Topics Learned</h2>
 <li>2D Collision Detection</li>
